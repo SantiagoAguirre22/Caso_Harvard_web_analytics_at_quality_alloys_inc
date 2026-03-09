@@ -379,3 +379,45 @@ print(grafico_p6)
 
 correlation_p6 <- cor(data_combined$Revenue, data_combined$Visits, use = "complete.obs")
 correlation_p6
+
+# ---------------------------------------------------------
+# Punto 7
+# ---------------------------------------------------------
+
+grafico_rev_inq <- ggplot(data_combined, aes(x = Inquiries, y = Revenue)) +
+  geom_point(color = "steelblue", size = 2.5, alpha = 0.7) +
+  labs(
+    title = "Revenue vs Inquiries",
+    subtitle = "Quality Alloys, Inc.",
+    x = "Number of Inquiries",
+    y = "Revenue"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+
+print(grafico_rev_inq)
+
+correlation_rev_inq <- cor(data_combined$Revenue, data_combined$Inquiries, use = "complete.obs")
+correlation_rev_inq
+
+grafico_vis_inq <- ggplot(data_combined, aes(x = Visits, y = Inquiries)) +
+  geom_point(color = "steelblue", size = 2.5, alpha = 0.7) +
+  labs(
+    title = "Visits vs Inquiries",
+    subtitle = "Quality Alloys, Inc.",
+    x = "Website Visits",
+    y = "Number of Inquiries"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+
+print(grafico_vis_inq)
+
+correlation_vis_inq <- cor(data_combined$Visits, data_combined$Inquiries, use = "complete.obs")
+correlation_vis_inq
