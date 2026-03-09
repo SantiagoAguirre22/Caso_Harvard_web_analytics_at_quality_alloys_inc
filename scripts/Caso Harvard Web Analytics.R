@@ -486,3 +486,99 @@ histograma_lbs <- ggplot(data_lbs, aes(x = `Lbs. Sold`)) +
 print(histograma_lbs)
 
 ggsave("histograma_libras_vendidas.png", histograma_lbs, width = 8, height = 5, dpi = 300)
+
+# ---------------------------------------------------------
+# Inciso (d)
+# ---------------------------------------------------------
+
+data_lbs <- data_lbs %>%
+  mutate(z_score = (`Lbs. Sold` - mean_lbs) / sd_lbs)
+
+total_obs <- nrow(data_lbs)
+
+within_1sd <- sum(abs(data_lbs$z_score) <= 1, na.rm = TRUE)
+within_2sd <- sum(abs(data_lbs$z_score) <= 2, na.rm = TRUE)
+within_3sd <- sum(abs(data_lbs$z_score) <= 3, na.rm = TRUE)
+
+tabla_empirical <- data.frame(
+  Interval = c("Mean ± 1 SD", "Mean ± 2 SD", "Mean ± 3 SD"),
+  Theoretical_Percentage = c(0.68, 0.95, 0.99),
+  Theoretical_Observations = c(total_obs * 0.68, total_obs * 0.95, total_obs * 0.99),
+  Actual_Observations = c(within_1sd, within_2sd, within_3sd)
+)
+
+tabla_empirical_gt <- tabla_empirical %>%
+  gt() %>%
+  tab_header(
+    title = md("**Empirical Rule Evaluation**")
+  ) %>%
+  fmt_number(
+    columns = c(Theoretical_Percentage, Theoretical_Observations, Actual_Observations),
+    decimals = 2
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  tab_options(
+    table.width = pct(90),
+    heading.align = "center",
+    table.font.size = px(13),
+    data_row.padding = px(6)
+  )
+
+tabla_empirical_gt
+
+# ---------------------------------------------------------
+# Inciso (e)
+# ---------------------------------------------------------
+
+plus_1sd <- sum(data_lbs$z_score > 0 & data_lbs$z_score <= 1, na.rm = TRUE)
+minus_1sd <- sum(data_lbs$z_score < 0 & data_lbs$z_score >= -1, na.rm = TRUE)
+
+plus_1_2sd <- sum(data_lbs$z_score > 1 & data_lbs$z_score <= 2, na.rm = TRUE)
+minus_1_2sd <- sum(data_lbs$z_score < -1 & data_lbs$z_score >= -2, na.rm = TRUE)
+
+plus_2_3sd <- sum(data_lbs$z_score > 2 & data_lbs$z_score <= 3, na.rm = TRUE)
+minus_2_3sd <- sum(data_lbs$z_score < -2 & data_lbs$z_score >= -3, na.rm = TRUE)
+
+tabla_intervalos <- data.frame(
+  Interval = c(
+    "Mean to +1 SD",
+    "Mean to -1 SD",
+    "+1 SD to +2 SD",
+    "-1 SD to -2 SD",
+    "+2 SD to +3 SD",
+    "-2 SD to -3 SD"
+  ),
+  Actual_Observations = c(
+    plus_1sd,
+    minus_1sd,
+    plus_1_2sd,
+    minus_1_2sd,
+    plus_2_3sd,
+    minus_2_3sd
+  )
+)
+
+tabla_intervalos_gt <- tabla_intervalos %>%
+  gt() %>%
+  tab_header(
+    title = md("**Detailed Intervals Around the Mean**")
+  ) %>%
+  fmt_number(
+    columns = Actual_Observations,
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  tab_options(
+    table.width = pct(85),
+    heading.align = "center",
+    table.font.size = px(13),
+    data_row.padding = px(6)
+  )
+
+tabla_intervalos_gt
