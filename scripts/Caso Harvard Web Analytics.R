@@ -582,3 +582,62 @@ tabla_intervalos_gt <- tabla_intervalos %>%
   )
 
 tabla_intervalos_gt
+
+# ---------------------------------------------------------
+# Inciso (g)
+# ---------------------------------------------------------
+
+skew_lbs <- skewness(lbs_sold, na.rm = TRUE)
+kurt_lbs <- kurtosis(lbs_sold, na.rm = TRUE)
+
+tabla_forma <- data.frame(
+  Measure = c("Skewness", "Kurtosis"),
+  Value = c(skew_lbs, kurt_lbs)
+)
+
+tabla_forma_gt <- tabla_forma %>%
+  gt() %>%
+  tab_header(
+    title = md("**Skewness and Kurtosis**")
+  ) %>%
+  fmt_number(
+    columns = Value,
+    decimals = 4
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  tab_options(
+    table.width = pct(60),
+    heading.align = "center",
+    table.font.size = px(13),
+    data_row.padding = px(6)
+  )
+
+tabla_forma_gt
+
+# ---------------------------------------------------------
+# Punto 9
+# ---------------------------------------------------------
+
+# Revisar estructura de los datos
+str(data_daily_visits)
+head(data_daily_visits)
+
+# Extraer variable de visitas
+daily_visits <- data_daily_visits$Visits
+
+# Crear histograma de visitas diarias
+histograma_visitas <- ggplot(data_daily_visits, aes(x = Visits)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "black") +
+  labs(
+    title = "Daily Website Visits",
+    x = "Daily Visits",
+    y = "Frequency"
+  ) +
+  formato_grafica
+
+print(histograma_visitas)
+
+ggsave("histograma_visitas_diarias.png", histograma_visitas, width = 8, height = 5, dpi = 300)
