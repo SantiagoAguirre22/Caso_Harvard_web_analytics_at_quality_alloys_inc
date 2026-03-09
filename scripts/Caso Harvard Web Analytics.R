@@ -51,18 +51,18 @@ data_combined <- left_join(
 )
 
 # Crear orden de semanas
-orden_semanas <- data_combined$Week (2008-2009)
+orden_semanas <- data_combined$`Week (2008-2009)`
 
 data_combined <- data_combined %>%
-  mutate(Week (2008-2009) = factor(Week (2008-2009), levels = orden_semanas))
+  mutate(`Week (2008-2009)` = factor(`Week (2008-2009)`, levels = orden_semanas))
 
 # Crear periodos
 data_combined <- data_combined %>%
   mutate(period = case_when(
-    Week (2008-2009) %in% orden_semanas[1:14] ~ "Initial",
-    Week (2008-2009) %in% orden_semanas[15:34] ~ "Pre-promotion",
-    Week (2008-2009) %in% orden_semanas[35:50] ~ "Promotion",
-    Week (2008-2009) %in% orden_semanas[51:length(orden_semanas)] ~ "Post-promotion",
+    `Week (2008-2009)` %in% orden_semanas[1:14] ~ "Initial",
+    `Week (2008-2009)` %in% orden_semanas[15:34] ~ "Pre-promotion",
+    `Week (2008-2009)` %in% orden_semanas[35:50] ~ "Promotion",
+    `Week (2008-2009)` %in% orden_semanas[51:length(orden_semanas)] ~ "Post-promotion",
     TRUE ~ NA_character_
   ))
 
@@ -75,7 +75,7 @@ data_combined$period <- factor(
 # ---------------------------------------------------------
 
 # Gráfica de Unique Visits
-grafico_unique_visits <- ggplot(data_combined, aes(x = Week (2008-2009), y = Unique Visits)) +
+grafico_unique_visits <- ggplot(data_combined, aes(x = `Week (2008-2009)`, y = `Unique Visits`)) +
   geom_col(fill = "steelblue") +
   labs(
     title = "Unique Visits",
@@ -93,7 +93,7 @@ print(grafico_unique_visits)
 ggsave("unique_visits.png", plot = grafico_unique_visits, width = 18, height = 8, dpi = 300)
 
 # Gráfica de Revenue
-grafico_revenue <- ggplot(data_combined, aes(x = Week (2008-2009), y = Revenue)) +
+grafico_revenue <- ggplot(data_combined, aes(x = `Week (2008-2009)`, y = Revenue)) +
   geom_col(fill = "steelblue") +
   labs(
     title = "Revenue",
@@ -112,7 +112,7 @@ print(grafico_revenue)
 ggsave("revenue_plot.png", plot = grafico_revenue, width = 18, height = 8, dpi = 300)
 
 # Gráfica de Profit
-grafico_profit <- ggplot(data_combined, aes(x = Week (2008-2009), y = Profit)) +
+grafico_profit <- ggplot(data_combined, aes(x = `Week (2008-2009)`, y = Profit)) +
   geom_col(fill = "steelblue") +
   labs(
     title = "Profit",
@@ -131,7 +131,7 @@ print(grafico_profit)
 ggsave("profit_plot.png", plot = grafico_profit, width = 18, height = 8, dpi = 300)
 
 # Gráfica de Pounds Sold
-grafico_pounds_sold <- ggplot(data_combined, aes(x = Week (2008-2009), y = Lbs. Sold)) +
+grafico_pounds_sold <- ggplot(data_combined, aes(x = `Week (2008-2009)`, y = `Lbs. Sold`)) +
   geom_col(fill = "steelblue") +
   labs(
     title = "Pounds Sold",
@@ -163,12 +163,12 @@ desc_stats <- function(df) {
       min(df$Visits, na.rm = TRUE),
       max(df$Visits, na.rm = TRUE)
     ),
-    Unique Visits = c(
-      mean(df$Unique Visits, na.rm = TRUE),
-      median(df$Unique Visits, na.rm = TRUE),
-      sd(df$Unique Visits, na.rm = TRUE),
-      min(df$Unique Visits, na.rm = TRUE),
-      max(df$Unique Visits, na.rm = TRUE)
+    `Unique Visits` = c(
+      mean(df$`Unique Visits`, na.rm = TRUE),
+      median(df$`Unique Visits`, na.rm = TRUE),
+      sd(df$`Unique Visits`, na.rm = TRUE),
+      min(df$`Unique Visits`, na.rm = TRUE),
+      max(df$`Unique Visits`, na.rm = TRUE)
     ),
     Revenue = c(
       mean(df$Revenue, na.rm = TRUE),
@@ -184,12 +184,12 @@ desc_stats <- function(df) {
       min(df$Profit, na.rm = TRUE),
       max(df$Profit, na.rm = TRUE)
     ),
-    Lbs. Sold = c(
-      mean(df$Lbs. Sold, na.rm = TRUE),
-      median(df$Lbs. Sold, na.rm = TRUE),
-      sd(df$Lbs. Sold, na.rm = TRUE),
-      min(df$Lbs. Sold, na.rm = TRUE),
-      max(df$Lbs. Sold, na.rm = TRUE)
+    `Lbs. Sold` = c(
+      mean(df$`Lbs. Sold`, na.rm = TRUE),
+      median(df$`Lbs. Sold`, na.rm = TRUE),
+      sd(df$`Lbs. Sold`, na.rm = TRUE),
+      min(df$`Lbs. Sold`, na.rm = TRUE),
+      max(df$`Lbs. Sold`, na.rm = TRUE)
     )
   )
 }
@@ -250,10 +250,10 @@ means_by_period <- data_combined %>%
   group_by(period) %>%
   summarise(
     mean_visits = mean(Visits, na.rm = TRUE),
-    mean_unique_visits = mean(Unique Visits, na.rm = TRUE),
+    mean_unique_visits = mean(`Unique Visits`, na.rm = TRUE),
     mean_revenue = mean(Revenue, na.rm = TRUE),
     mean_profit = mean(Profit, na.rm = TRUE),
-    mean_pounds_sold = mean(Lbs. Sold, na.rm = TRUE)
+    mean_pounds_sold = mean(`Lbs. Sold`, na.rm = TRUE)
   )
 
 # Gráfica 1: Mean Visits
@@ -336,9 +336,9 @@ ggsave("mean_pounds_sold.png", plot = g5, width = 8, height = 5, dpi = 300)
 # ---------------------------------------------------------
 
 revenue <- data_combined$Revenue
-pounds_sold <- data_combined$Lbs. Sold
+pounds_sold <- data_combined$`Lbs. Sold`
 
-grafico_p5 <- ggplot(data_combined, aes(x = Lbs. Sold, y = Revenue)) +
+grafico_p5 <- ggplot(data_combined, aes(x = `Lbs. Sold`, y = Revenue)) +
   geom_point(color = "steelblue", size = 2, alpha = 0.7) +
   labs(
     title = "Revenue vs Pounds Sold",
@@ -776,3 +776,4 @@ grafico_operating_systems <- ggplot(operating_systems, aes(x = reorder(OS, Visit
   theme(plot.title = element_text(face = "bold"))
 
 print(grafico_operating_systems)
+
