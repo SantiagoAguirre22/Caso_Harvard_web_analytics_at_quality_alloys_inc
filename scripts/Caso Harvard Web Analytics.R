@@ -421,3 +421,68 @@ print(grafico_vis_inq)
 
 correlation_vis_inq <- cor(data_combined$Visits, data_combined$Inquiries, use = "complete.obs")
 correlation_vis_inq
+
+# ---------------------------------------------------------
+# Punto 8
+# ---------------------------------------------------------
+
+# Revisar estructura de los datos
+str(data_lbs)
+head(data_lbs)
+
+# Extraer la variable de libras vendidas
+lbs_sold <- data_lbs$`Lbs. Sold`
+
+# ---------------------------------------------------------
+# Inciso (a)
+# ---------------------------------------------------------
+
+mean_lbs <- mean(lbs_sold, na.rm = TRUE)
+median_lbs <- median(lbs_sold, na.rm = TRUE)
+sd_lbs <- sd(lbs_sold, na.rm = TRUE)
+min_lbs <- min(lbs_sold, na.rm = TRUE)
+max_lbs <- max(lbs_sold, na.rm = TRUE)
+
+tabla_resumen <- data.frame(
+  Measure = c("Mean", "Median", "Standard Deviation", "Minimum", "Maximum"),
+  Value = c(mean_lbs, median_lbs, sd_lbs, min_lbs, max_lbs)
+)
+
+tabla_resumen_gt <- tabla_resumen %>%
+  gt() %>%
+  tab_header(
+    title = md("**Descriptive Statistics for Pounds Sold**")
+  ) %>%
+  fmt_number(
+    columns = Value,
+    decimals = 2
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  tab_options(
+    table.width = pct(80),
+    heading.align = "center",
+    table.font.size = px(13),
+    data_row.padding = px(6)
+  )
+
+tabla_resumen_gt
+
+# ---------------------------------------------------------
+# Inciso (b)
+# ---------------------------------------------------------
+
+histograma_lbs <- ggplot(data_lbs, aes(x = `Lbs. Sold`)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "black") +
+  labs(
+    title = "Pounds Sold per Week",
+    x = "Pounds Sold",
+    y = "Frequency"
+  ) +
+  formato_grafica
+
+print(histograma_lbs)
+
+ggsave("histograma_libras_vendidas.png", histograma_lbs, width = 8, height = 5, dpi = 300)
