@@ -330,3 +330,52 @@ ggsave("mean_unique_visits.png", plot = g2, width = 8, height = 5, dpi = 300)
 ggsave("mean_revenue.png", plot = g3, width = 8, height = 5, dpi = 300)
 ggsave("mean_profit.png", plot = g4, width = 8, height = 5, dpi = 300)
 ggsave("mean_pounds_sold.png", plot = g5, width = 8, height = 5, dpi = 300)
+
+# ---------------------------------------------------------
+# Punto 5
+# ---------------------------------------------------------
+
+revenue <- data_combined$Revenue
+pounds_sold <- data_combined$Lbs. Sold
+
+grafico_p5 <- ggplot(data_combined, aes(x = Lbs. Sold, y = Revenue)) +
+  geom_point(color = "steelblue", size = 2, alpha = 0.7) +
+  labs(
+    title = "Revenue vs Pounds Sold",
+    subtitle = "Quality Alloys, Inc.",
+    x = "Pounds Sold",
+    y = "Revenue"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+
+print(grafico_p5)
+
+correlation_p5 <- cor(revenue, pounds_sold, use = "complete.obs")
+correlation_p5
+
+# ---------------------------------------------------------
+# Punto 6
+# ---------------------------------------------------------
+
+grafico_p6 <- ggplot(data_combined, aes(x = Visits, y = Revenue)) +
+  geom_point(color = "steelblue", size = 2.5, alpha = 0.75) +
+  labs(
+    title = "Revenue vs Visits",
+    subtitle = "Quality Alloys, Inc.",
+    x = "Website Visits",
+    y = "Revenue"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+
+print(grafico_p6)
+
+correlation_p6 <- cor(data_combined$Revenue, data_combined$Visits, use = "complete.obs")
+correlation_p6
