@@ -241,3 +241,92 @@ writeData(wb, "Promotion", tabla_promotion)
 writeData(wb, "Post-promotion", tabla_post)
 
 saveWorkbook(wb, "descriptive_statistics.xlsx", overwrite = TRUE)
+
+# ---------------------------------------------------------
+# Punto 3
+# ---------------------------------------------------------
+
+means_by_period <- data_combined %>%
+  group_by(period) %>%
+  summarise(
+    mean_visits = mean(Visits, na.rm = TRUE),
+    mean_unique_visits = mean(Unique Visits, na.rm = TRUE),
+    mean_revenue = mean(Revenue, na.rm = TRUE),
+    mean_profit = mean(Profit, na.rm = TRUE),
+    mean_pounds_sold = mean(Lbs. Sold, na.rm = TRUE)
+  )
+
+# Gráfica 1: Mean Visits
+g1 <- ggplot(means_by_period, aes(x = period, y = mean_visits)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = round(mean_visits, 2)), vjust = -0.3, size = 4) +
+  labs(
+    title = "Mean Visits by Period",
+    x = "Period",
+    y = "Mean Visits"
+  ) +
+  theme_minimal()
+
+print(g1)
+
+# Gráfica 2: Mean Unique Visits
+g2 <- ggplot(means_by_period, aes(x = period, y = mean_unique_visits)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = round(mean_unique_visits, 2)), vjust = -0.3, size = 4) +
+  labs(
+    title = "Mean Unique Visits by Period",
+    x = "Period",
+    y = "Mean Unique Visits"
+  ) +
+  theme_minimal()
+
+print(g2)
+
+# Gráfica 3: Mean Revenue
+g3 <- ggplot(means_by_period, aes(x = period, y = mean_revenue)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = dollar(mean_revenue, prefix = "$", big.mark = ".", decimal.mark = ",")),
+            vjust = -0.3, size = 4) +
+  labs(
+    title = "Mean Revenue by Period",
+    x = "Period",
+    y = "Mean Revenue"
+  ) +
+  scale_y_continuous(labels = label_dollar(prefix = "$", big.mark = ".", decimal.mark = ",")) +
+  theme_minimal()
+
+print(g3)
+
+# Gráfica 4: Mean Profit
+g4 <- ggplot(means_by_period, aes(x = period, y = mean_profit)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = dollar(mean_profit, prefix = "$", big.mark = ".", decimal.mark = ",")),
+            vjust = -0.3, size = 4) +
+  labs(
+    title = "Mean Profit by Period",
+    x = "Period",
+    y = "Mean Profit"
+  ) +
+  scale_y_continuous(labels = label_dollar(prefix = "$", big.mark = ".", decimal.mark = ",")) +
+  theme_minimal()
+
+print(g4)
+
+# Gráfica 5: Mean Pounds Sold
+g5 <- ggplot(means_by_period, aes(x = period, y = mean_pounds_sold)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = round(mean_pounds_sold, 2)), vjust = -0.3, size = 4) +
+  labs(
+    title = "Mean Pounds Sold by Period",
+    x = "Period",
+    y = "Mean Pounds Sold"
+  ) +
+  theme_minimal()
+
+print(g5)
+
+ggsave("mean_visits.png", plot = g1, width = 8, height = 5, dpi = 300)
+ggsave("mean_unique_visits.png", plot = g2, width = 8, height = 5, dpi = 300)
+ggsave("mean_revenue.png", plot = g3, width = 8, height = 5, dpi = 300)
+ggsave("mean_profit.png", plot = g4, width = 8, height = 5, dpi = 300)
+ggsave("mean_pounds_sold.png", plot = g5, width = 8, height = 5, dpi = 300)
