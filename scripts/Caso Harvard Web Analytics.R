@@ -147,3 +147,97 @@ grafico_pounds_sold <- ggplot(data_combined, aes(x = Week (2008-2009), y = Lbs. 
 
 print(grafico_pounds_sold)
 ggsave("pounds_sold_plot.png", plot = grafico_pounds_sold, width = 18, height = 8, dpi = 300)
+
+# ---------------------------------------------------------
+# Punto 2
+# ---------------------------------------------------------
+
+# Función de estadísticas descriptivas
+desc_stats <- function(df) {
+  data.frame(
+    Measure = c("Mean", "Median", "Standard Deviation", "Minimum", "Maximum"),
+    Visits = c(
+      mean(df$Visits, na.rm = TRUE),
+      median(df$Visits, na.rm = TRUE),
+      sd(df$Visits, na.rm = TRUE),
+      min(df$Visits, na.rm = TRUE),
+      max(df$Visits, na.rm = TRUE)
+    ),
+    Unique Visits = c(
+      mean(df$Unique Visits, na.rm = TRUE),
+      median(df$Unique Visits, na.rm = TRUE),
+      sd(df$Unique Visits, na.rm = TRUE),
+      min(df$Unique Visits, na.rm = TRUE),
+      max(df$Unique Visits, na.rm = TRUE)
+    ),
+    Revenue = c(
+      mean(df$Revenue, na.rm = TRUE),
+      median(df$Revenue, na.rm = TRUE),
+      sd(df$Revenue, na.rm = TRUE),
+      min(df$Revenue, na.rm = TRUE),
+      max(df$Revenue, na.rm = TRUE)
+    ),
+    Profit = c(
+      mean(df$Profit, na.rm = TRUE),
+      median(df$Profit, na.rm = TRUE),
+      sd(df$Profit, na.rm = TRUE),
+      min(df$Profit, na.rm = TRUE),
+      max(df$Profit, na.rm = TRUE)
+    ),
+    Lbs. Sold = c(
+      mean(df$Lbs. Sold, na.rm = TRUE),
+      median(df$Lbs. Sold, na.rm = TRUE),
+      sd(df$Lbs. Sold, na.rm = TRUE),
+      min(df$Lbs. Sold, na.rm = TRUE),
+      max(df$Lbs. Sold, na.rm = TRUE)
+    )
+  )
+}
+
+tabla_initial <- data_combined %>%
+  filter(period == "Initial") %>%
+  desc_stats()
+
+tabla_pre <- data_combined %>%
+  filter(period == "Pre-promotion") %>%
+  desc_stats()
+
+tabla_promotion <- data_combined %>%
+  filter(period == "Promotion") %>%
+  desc_stats()
+
+tabla_post <- data_combined %>%
+  filter(period == "Post-promotion") %>%
+  desc_stats()
+
+tabla_initial[, 2:6] <- round(tabla_initial[, 2:6], 2)
+tabla_pre[, 2:6] <- round(tabla_pre[, 2:6], 2)
+tabla_promotion[, 2:6] <- round(tabla_promotion[, 2:6], 2)
+tabla_post[, 2:6] <- round(tabla_post[, 2:6], 2)
+
+cat("\nINITIAL PERIOD\n")
+print(tabla_initial)
+
+cat("\nPRE-PROMOTION PERIOD\n")
+print(tabla_pre)
+
+cat("\nPROMOTION PERIOD\n")
+print(tabla_promotion)
+
+cat("\nPOST-PROMOTION PERIOD\n")
+print(tabla_post)
+
+# Exportar tablas a Excel
+wb <- createWorkbook()
+
+addWorksheet(wb, "Initial")
+addWorksheet(wb, "Pre-promotion")
+addWorksheet(wb, "Promotion")
+addWorksheet(wb, "Post-promotion")
+
+writeData(wb, "Initial", tabla_initial)
+writeData(wb, "Pre-promotion", tabla_pre)
+writeData(wb, "Promotion", tabla_promotion)
+writeData(wb, "Post-promotion", tabla_post)
+
+saveWorkbook(wb, "descriptive_statistics.xlsx", overwrite = TRUE)
