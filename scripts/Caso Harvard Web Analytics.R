@@ -641,3 +641,138 @@ histograma_visitas <- ggplot(data_daily_visits, aes(x = Visits)) +
 print(histograma_visitas)
 
 ggsave("histograma_visitas_diarias.png", histograma_visitas, width = 8, height = 5, dpi = 300)
+
+# ---------------------------------------------------------
+# Punto 10
+# ---------------------------------------------------------
+
+# All Traffic Sources
+traffic_sources <- data.frame(
+  Source = c("Referring Sites", "Search Engines", "Direct Traffic", "Other"),
+  Visits = c(38754, 20964, 9709, 4)
+)
+
+grafico_traffic_sources <- ggplot(traffic_sources, aes(x = reorder(Source, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "All Traffic Sources",
+    x = "Traffic Source",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_traffic_sources)
+
+# Top Ten Referring Sites
+referring_sites <- data.frame(
+  Site = c("googleads.g.doubleclick.net",
+           "pagead2.googlesyndication.com",
+           "sedoparking.com",
+           "globalspec.com",
+           "searchportal.information.com",
+           "freepatentsonline.com",
+           "thomasnet.com",
+           "mu.com",
+           "mail.google.com",
+           "psicofxp.com"),
+  Visits = c(15626, 8044, 3138, 693, 582, 389, 379, 344, 337, 310)
+)
+
+grafico_referring_sites <- ggplot(referring_sites, aes(x = reorder(Site, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top Ten Referring Sites",
+    x = "Referring Site",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_referring_sites)
+
+# Top Ten Search Engine Sources
+search_engines <- data.frame(
+  Engine = c("google", "yahoo", "search", "msn", "aol",
+             "ask", "live", "bing", "voila", "netscape"),
+  Visits = c(17681, 1250, 592, 424, 309, 268, 145, 122, 63, 26)
+)
+
+grafico_search_engines <- ggplot(search_engines, aes(x = reorder(Engine, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top Ten Search Engine Sources of Visits",
+    x = "Search Engine",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_search_engines)
+
+# Top Ten Geographic Sources
+geography <- data.frame(
+  Region = c("South America", "Northern America", "Central America",
+             "Western Europe", "Eastern Asia", "Northern Europe",
+             "Southern Asia", "South-Eastern Asia",
+             "Southern Europe", "Eastern Europe"),
+  Visits = c(22616, 17509, 6776, 5214, 3228, 2721, 2589, 1968, 1538, 1427)
+)
+
+grafico_geography <- ggplot(geography, aes(x = reorder(Region, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top Ten Geographic Sources by Sub-Continent",
+    x = "Region",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_geography)
+
+# Top Ten Browsers Used
+browsers <- data.frame(
+  Browser = c("Internet Explorer", "Firefox", "Opera",
+              "Safari", "Chrome", "Mozilla",
+              "Netscape", "Konqueror", "SeaMonkey", "Camino"),
+  Visits = c(53080, 13142, 938, 850, 792, 478, 47, 31, 24, 9)
+)
+
+grafico_browsers <- ggplot(browsers, aes(x = reorder(Browser, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top Ten Browsers Used",
+    x = "Browser",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_browsers)
+
+# Top Ten Operating Systems Used
+operating_systems <- data.frame(
+  OS = c("Windows", "Macintosh", "Linux", "(not set)",
+         "iPhone", "SymbianOS", "FreeBSD",
+         "iPod", "Playstation 3", "Playstation Portable"),
+  Visits = c(67063, 1184, 1045, 48, 29, 20, 18, 8, 4, 3)
+)
+
+grafico_operating_systems <- ggplot(operating_systems, aes(x = reorder(OS, Visits), y = Visits)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top Ten Operating Systems Used",
+    x = "Operating System",
+    y = "Number of Visits"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"))
+
+print(grafico_operating_systems)
