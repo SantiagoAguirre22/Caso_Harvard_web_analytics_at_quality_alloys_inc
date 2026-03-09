@@ -70,3 +70,80 @@ data_combined$period <- factor(
   data_combined$period,
   levels = c("Initial", "Pre-promotion", "Promotion", "Post-promotion")
 )
+# ---------------------------------------------------------
+# Punto 1
+# ---------------------------------------------------------
+
+# Gráfica de Unique Visits
+grafico_unique_visits <- ggplot(data_combined, aes(x = Week (2008-2009), y = Unique Visits)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Unique Visits",
+    x = "Week",
+    y = "Unique Visits"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5),
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+
+print(grafico_unique_visits)
+ggsave("unique_visits.png", plot = grafico_unique_visits, width = 18, height = 8, dpi = 300)
+
+# Gráfica de Revenue
+grafico_revenue <- ggplot(data_combined, aes(x = Week (2008-2009), y = Revenue)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Revenue",
+    x = "Week",
+    y = "Revenue"
+  ) +
+  scale_y_continuous(labels = label_dollar(prefix = "$", big.mark = ".", decimal.mark = ",")) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5),
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+
+print(grafico_revenue)
+ggsave("revenue_plot.png", plot = grafico_revenue, width = 18, height = 8, dpi = 300)
+
+# Gráfica de Profit
+grafico_profit <- ggplot(data_combined, aes(x = Week (2008-2009), y = Profit)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Profit",
+    x = "Week",
+    y = "Profit"
+  ) +
+  scale_y_continuous(labels = label_dollar(prefix = "$", big.mark = ".", decimal.mark = ",")) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5),
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+
+print(grafico_profit)
+ggsave("profit_plot.png", plot = grafico_profit, width = 18, height = 8, dpi = 300)
+
+# Gráfica de Pounds Sold
+grafico_pounds_sold <- ggplot(data_combined, aes(x = Week (2008-2009), y = Lbs. Sold)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Pounds Sold",
+    x = "Week",
+    y = "Pounds Sold"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5),
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+
+print(grafico_pounds_sold)
+ggsave("pounds_sold_plot.png", plot = grafico_pounds_sold, width = 18, height = 8, dpi = 300)
